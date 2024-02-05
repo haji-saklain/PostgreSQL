@@ -134,7 +134,7 @@ Table of Contents
 
 
 
-**[Overview of PostgreSQL]{.underline}**
+**Overview of PostgreSQL**
 
 -   PostgreSQL,often referred to as \"Postgres,\" is a powerful and
     open-source relational database management system (RDBMS). It is
@@ -162,7 +162,10 @@ Table of Contents
     same time. This makes sure that many users can work with and change
     data at the same time without any problems.
 
-**[Key Features]{.underline}**
+
+    
+
+**Key Features**
 
 **Advanced Data Types:**
 
@@ -202,7 +205,10 @@ better. They regularly update it,fix bugs,and add new features. This
 helps ensure that PostgreSQL remains a reliable and always improving
 database system.
 
-**[Installation]{.underline}**
+
+
+
+**Installation**
 
 Installing PostgreSQL involves a few steps to ensure a smooth setup.
 
@@ -224,9 +230,12 @@ requirements:
 -   **Disk Space:** Allocate at least 100 MB for the PostgreSQL binaries
     and libraries. Additional space is required for your databases.
 
-**[Download and Install PostgreSQL]{.underline}**
 
-**[Windows:]{.underline}**
+
+
+**Download and Install PostgreSQL**
+
+**Windows:**
 
 1.  Visit the official PostgreSQL download page
 
@@ -240,11 +249,13 @@ requirements:
 4.  During installation,you will be prompted to set a password for the
     default database superuser.
 
-**[macOS:]{.underline}**
+
+**macOS:**
 
 Use Homebrew to install PostgreSQL:
 
 -   brew install postgresql
+
 
 **Linux (Ubuntu):**
 
@@ -252,11 +263,15 @@ Use Homebrew to install PostgreSQL:
 
 > ![](PostgreSQL/media/image1.jpeg)
 
+
 2\. Install PostgreSQL: sudo apt-get install postgresql
 
 ![](PostgreSQL/media/image2.png)
 
-**[Connecting to PostgreSQL]{.underline}**
+
+
+
+**Connecting to PostgreSQL**
 
 To connect to PostgreSQL,you can use the \`psql\` command-line tool or
 a graphical client like pgAdmin.
@@ -274,7 +289,7 @@ You\’ll be prompted to enter your password. If you\’re connecting
 locally and using the default settings,you might not need to provide a
 password.
 
-**[Creating a Database]{.underline}**
+**Creating a Database**
 
 To create a new database,you can use the SQL command within \`psql\`.
 
@@ -282,7 +297,10 @@ SQL Command: CREATE DATABASE your_database;
 
 ![](PostgreSQL/media/image3.png)
 
-**[Creating Tables]{.underline}**
+
+
+
+**Creating Tables**
 
 Creating tables involves defining the structure of your data by
 specifying columns,data types,and constraints.
@@ -298,7 +316,10 @@ DECIMAL(10,2));
 
 -   \`salary\`: Decimal column for the employee\’s salary.
 
-**[Basic SQL Commands]{.underline}**
+
+
+
+**Basic SQL Commands**
 
 **SELECT Statement:**
 
@@ -308,11 +329,13 @@ SELECT \* FROM employees;
 
 ![](PostgreSQL/media/image5.png)
 
+
 **Retrieve specific columns**
 
 SELECT name,salary FROM employees;
 
 ![](PostgreSQL/media/image6.png)
+
 
 **INSERT Statement:**
 
@@ -320,11 +343,13 @@ INSERT INTO employees (name,salary) VALUES (\’John Doe\’,60000.00);
 
 ![](PostgreSQL/media/image7.png)
 
+
 **Filter results with a condition**
 
 SELECT \* FROM employees WHERE salary \> 50000;
 
 ![](PostgreSQL/media/image8.png)
+
 
 **UPDATE Statement:**
 
@@ -332,13 +357,17 @@ UPDATE employees SET salary = 65000.00 WHERE name = \’John Doe\’;
 
 ![](PostgreSQL/media/image9.png)
 
+
 **DELETE Statement:**
 
 DELETE FROM employees WHERE name = \’John Doe\’;
 
 ![](PostgreSQL/media/image10.png)
 
-**[Data Types]{.underline}**
+
+
+
+**Data Types**
 
 In PostgreSQL,there are various data types that you can use to define
 the characteristics of columns in your tables.
@@ -358,6 +387,7 @@ INSERT INTO numeric_example VALUES (123,456.78,789.01,1234.5678);
 
 ![](PostgreSQL/media/image12.png)
 
+
 **Character Types:**
 
 Character types include \`CHAR\`,\`VARCHAR\`,and \`TEXT\`
@@ -369,6 +399,7 @@ INSERT INTO character_example VALUES (\’abc\’,\’abcdefg\’,
 \’abcdefghijklmnopqrstuvwxyz\’);
 
 ![](PostgreSQL/media/image13.png)
+
 
 **Date and Time Types:**
 
@@ -382,6 +413,7 @@ INSERT INTO date_time_example VALUES (\’2024-02-01\’,\’12:30:00\’,
 \’2024-02-01 12:30:00\’,\’1 day 2 hours\’);
 
 ![](PostgreSQL/media/image14.png)
+
 
 **Composite Type:**
 
@@ -398,6 +430,7 @@ road\’,\’Hyderabad\’,\’123456\’));
 
 ![](PostgreSQL/media/image15.png)
 
+
 **Custom Types:**
 
 PostgreSQL allows the creation of custom types using the \`CREATE TYPE\`
@@ -413,7 +446,10 @@ INSERT INTO person_mood (name,current_mood) VALUES (\’Alice\’,
 
 ![](PostgreSQL/media/image16.png)
 
-**[Queries and Joins]{.underline}**
+
+
+
+**Queries and Joins**
 
 **SELECT Statement:**
 
@@ -426,17 +462,20 @@ tables. It is the most fundamental and commonly used SQL statement.
 
 ![](PostgreSQL/media/image17.png)
 
+
 2.  Select specific columns
 
 -   SELECT name,salary FROM employees;
 
 ![](PostgreSQL/media/image18.png)
 
+
 3.  Use expressions and aliases
 
 -   SELECT name,salary \* 1.1 AS increased_salary FROM employees;
 
 ![](PostgreSQL/media/image19.png)
+
 
 **WHERE Clause:**
 
@@ -449,6 +488,7 @@ based on a specified condition.
 
 ![](PostgreSQL/media/image20.png)
 
+
 2.  Combine multiple conditions
 
 -   SELECT \* FROM employees WHERE salary \> 50000 AND department =
@@ -456,7 +496,10 @@ based on a specified condition.
 
 ![](PostgreSQL/media/image21.png)
 
-**[JOIN Operations (INNER,LEFT,RIGHT,FULL):]{.underline}**
+
+
+
+**JOIN Operations (INNER,LEFT,RIGHT,FULL):**
 
 Joins are used to combine rows from two or more tables based on related
 columns.
@@ -476,6 +519,8 @@ INSERT INTO departments (department_name) VALUES
 (\’HR\’),(\’IT\’),(\’Finance\’);
 
 ![](PostgreSQL/media/image22.png)
+
+
 **INNER JOIN:**
 
 Retrieve data where there is a match in both tables
@@ -484,6 +529,8 @@ SELECT employees.name,departments.department_name FROM employees INNER
 JOIN departments ON employees.department_id = departments.department_id;
 
 ![](PostgreSQL/media/image23.png)
+
+
 **LEFT JOIN:**
 
 Retrieve all rows from the left table and the matched rows from the
@@ -493,6 +540,7 @@ SELECT employees.name,departments.department_name FROM employees LEFT
 JOIN departments ON employees.department_id = departments.department_id;
 
 ![](PostgreSQL/media/image24.png)
+
 
 **RIGHT JOIN:**
 
@@ -504,6 +552,7 @@ JOIN departments ON employees.department_id = departments.department_id;
 
 ![](PostgreSQL/media/image25.png)
 
+
 **FULL JOIN:**
 
 Retrieve all rows when there is a match in either table
@@ -513,7 +562,10 @@ JOIN departments ON employees.department_id = departments.department_id;
 
 ![](PostgreSQL/media/image26.png)
 
-**[GROUP BY and HAVING:]{.underline}**
+
+
+
+**GROUP BY and HAVING:**
 
 Create employees table
 
@@ -527,6 +579,7 @@ INSERT INTO employees (name,salary,department_id) VALUES (\’qwerty\’,
 
 ![](PostgreSQL/media/image27.png)
 
+
 The **\`GROUP BY\`** clause is used to group rows that have the same
 values in specified columns into aggregated results.
 
@@ -537,12 +590,16 @@ department_id;
 
 ![](PostgreSQL/media/image28.png)
 
+
 2.  Count the number of employees in each department
 
 SELECT department_id,COUNT(\*) AS employee_count FROM employees GROUP
 BY department_id;
 
 ![](PostgreSQL/media/image29.png)
+
+
+
 The **\`HAVING\`** clause filters the results of the grouped data based
 on specified conditions.
 
@@ -552,6 +609,7 @@ SELECT department_id,AVG(salary) AS avg_salary FROM employees GROUP BY
 department_id HAVING AVG(salary) \> 55000;
 
 ![](PostgreSQL/media/image30.png)
+
 
 2.  Find departments with more than 1 employee and an average salary
     greater than 55000
@@ -564,7 +622,8 @@ AND AVG(salary) \> 55000;
 
 
 
-**[Primary Key]**
+
+**Primary Key**
 
 A primary key is like a special column or group of columns in a table that helps each row be different. It makes sure the data is correct and follows the rules of the database.
 
@@ -574,6 +633,7 @@ CREATE TABLE students (student\_id SERIAL PRIMARY KEY, name VARCHAR(100), age IN
 
 ![]( PostgreSQL/media/1.png)
 
+
 **Inserting data with a primary key**
 
 INSERT INTO students (name, age) VALUES ('haji', 25), ('saklain', 22);
@@ -581,13 +641,18 @@ INSERT INTO students (name, age) VALUES ('haji', 25), ('saklain', 22);
 ![]( PostgreSQL/media/2.png)
 
 
-**[Constraints]**
+
+
+**Constraints**
 
 Constraints are like rules for columns in a table. They help make sure the data is correct and complete. PostgreSQL has different types of constraints such as NOT NULL, UNIQUE, CHECK, and PRIMARY KEY.
+
 
 Adding a UNIQUE constraint
 
 ALTER TABLE students ADD CONSTRAINT unique\_name UNIQUE (name);
+
+
 
 Adding a CHECK constraint
 
@@ -595,12 +660,14 @@ ALTER TABLE students ADD CONSTRAINT check\_age CHECK (age \>= 18);
 
 ![](4.png)
 
+
+
 If you try to put in information with the same ID in a table that uses a primary key, it won't let you do it.
 
 ![]( PostgreSQL/media/3.png)
 
 
-**[Adding, Updating, and Deleting Records]**
+**Adding, Updating, and Deleting Records**
 
 **Adding Records:**
 
@@ -608,11 +675,14 @@ If you try to put in information with the same ID in a table that uses a primary
 
 INSERT INTO students (name, age) VALUES ('Alice Brown', 20);
 
+
 **Inserting multiple records**
 
 INSERT INTO students (name, age) VALUES ('Bob Johnson', 22), ('Eve White', 19);
 
 ![]( PostgreSQL/media/5.png)
+
+
 
 **Updating Records:**
 
@@ -620,13 +690,19 @@ UPDATE students SET age = 21 WHERE name = 'Alice Brown';
 
 ![]( PostgreSQL/media/6.png)
 
+
+
 **Deleting Records:**
 
 DELETE FROM students WHERE name = 'Bob Johnson';
 
 ![]( PostgreSQL/media/7.png)
 
-**[Foreign Key]**
+
+
+
+
+**Foreign Key**
 
 A foreign key is like a connection between information in two tables. It makes sure that the data in one table corresponds to the data in another table.
 
@@ -638,13 +714,18 @@ ALTER TABLE students ADD COLUMN course\_id INT, ADD CONSTRAINT fk\_course FOREIG
 
 ![]( PostgreSQL/media/8.png)
 
-**[Adding Relationships Between Tables]**
+
+
+
+
+**Adding Relationships Between Tables**
 
 Inserting data with foreign key relationships
 
 INSERT INTO students (name, age, course\_id) VALUES ('fkvf', 33, 8);
 
 ![]( PostgreSQL/media/9.png)
+
 
 **Query to fetch data with a JOIN**
 
