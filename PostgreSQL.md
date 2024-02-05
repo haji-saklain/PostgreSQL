@@ -1,4 +1,5 @@
 PostgreSQL Documentation
+------------------------
 
 Table of Contents
 
