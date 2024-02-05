@@ -564,7 +564,7 @@ AND AVG(salary) \> 55000;
 
 
 
-**[Primary Key]{.underline}**
+**[Primary Key]**
 
 A primary key is like a special column or group of columns in a table that helps each row be different. It makes sure the data is correct and follows the rules of the database.
 
@@ -580,11 +580,8 @@ INSERT INTO students (name, age) VALUES ('haji', 25), ('saklain', 22);
 
 ![]( PostgreSQL/media/2.png)
 
-If you try to put in information with the same ID in a table that uses a primary key, it won't let you do it.
 
-![]( PostgreSQL/media/3.png)
-
-**[Constraints]{.underline}**
+**[Constraints]**
 
 Constraints are like rules for columns in a table. They help make sure the data is correct and complete. PostgreSQL has different types of constraints such as NOT NULL, UNIQUE, CHECK, and PRIMARY KEY.
 
@@ -598,7 +595,12 @@ ALTER TABLE students ADD CONSTRAINT check\_age CHECK (age \>= 18);
 
 ![](4.png)
 
-**[Adding, Updating, and Deleting Records]{.underline}**
+If you try to put in information with the same ID in a table that uses a primary key, it won't let you do it.
+
+![]( PostgreSQL/media/3.png)
+
+
+**[Adding, Updating, and Deleting Records]**
 
 **Adding Records:**
 
@@ -624,7 +626,7 @@ DELETE FROM students WHERE name = 'Bob Johnson';
 
 ![]( PostgreSQL/media/7.png)
 
-**[Foreign Key]{.underline}**
+**[Foreign Key]**
 
 A foreign key is like a connection between information in two tables. It makes sure that the data in one table corresponds to the data in another table.
 
@@ -636,7 +638,7 @@ ALTER TABLE students ADD COLUMN course\_id INT, ADD CONSTRAINT fk\_course FOREIG
 
 ![]( PostgreSQL/media/8.png)
 
-**[Adding Relationships Between Tables]{.underline}**
+**[Adding Relationships Between Tables]**
 
 Inserting data with foreign key relationships
 
