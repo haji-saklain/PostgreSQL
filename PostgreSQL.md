@@ -165,7 +165,7 @@ Table of Contents
 <p>&nbsp;</p>
     <p>&nbsp;</p>
 
-**<u>Key Features<u/>**
+**<u>Key Features</u>**
 
 **Advanced Data Types:**
 
