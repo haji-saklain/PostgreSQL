@@ -47,8 +47,18 @@ Table of Contents
 -   JOIN Operations (INNER,LEFT,RIGHT,FULL)
 
 -   GROUP BY and HAVING
+  
+6. Primary Key
+   
+7. Foreign Key
 
-6.  Indexes and Optimization
+8. Constraints
+
+9. Adding, Updating, and Deleting Records
+
+10. Relationships
+
+11.  Indexes and Optimization
 
 -   Creating Indexes
 
@@ -56,7 +66,7 @@ Table of Contents
 
 -   EXPLAIN Statement
 
-7.  Transactions
+12.  Transactions
 
 -   ACID Properties
 
@@ -64,7 +74,7 @@ Table of Contents
 
 -   Savepoints
 
-8.  Security
+13.  Security
 
 -   Authentication Methods
 
@@ -72,25 +82,25 @@ Table of Contents
 
 -   Permissions and Privileges
 
-9.  Backup and Restore
+14.  Backup and Restore
 
 -   pg_dump and pg_restore
 
 -   Continuous Archiving and Point-in-Time Recovery
 
-10. Replication
+15. Replication
 
 -   Streaming Replication
 
 -   Logical Replication
 
-11. High Availability
+16. High Availability
 
 -   Connection Pooling
 
 -   Failover Strategies
 
-12. Advanced Features
+17. Advanced Features
 
 -   Triggers and Rules
 
@@ -100,13 +110,13 @@ Table of Contents
 
 -   Full-Text Search
 
-13. Extensions
+18. Extensions
 
 -   Overview of Extensions
 
 -   Installing and Managing Extensions
 
-14. Tools and Utilities
+19. Tools and Utilities
 
 -   pgAdmin (Graphical Administration Tool)
 
@@ -114,7 +124,7 @@ Table of Contents
 
 -   Other Third-Party Tools
 
-15. Troubleshooting
+20. Troubleshooting
 
 -   Common Issues and Solutions
 
@@ -122,21 +132,7 @@ Table of Contents
 
 -   Logging and Monitoring
 
-16. Community and Resources
 
--   PostgreSQL Community
-
--   Online Documentation and Manuals
-
--   Forums and Mailing Lists
-
-17. Best Practices
-
--   Database Design Best Practices
-
--   SQL Coding Standards
-
--   Performance Optimization Tips
 
 **[Overview of PostgreSQL]{.underline}**
 
@@ -565,3 +561,91 @@ avg_salary FROM employees GROUP BY department_id HAVING COUNT(\*) \> 1
 AND AVG(salary) \> 55000;
 
 ![](PostgreSQL/media/image31.png)
+
+
+
+**[Primary Key]{.underline}**
+
+A primary key is like a special column or group of columns in a table that helps each row be different. It makes sure the data is correct and follows the rules of the database.
+
+**Creating a table with a primary key**
+
+CREATE TABLE students (student\_id SERIAL PRIMARY KEY, name VARCHAR(100), age INT);
+
+![]( PostgreSQL/media/1.png)
+
+**Inserting data with a primary key**
+
+INSERT INTO students (name, age) VALUES ('haji', 25), ('saklain', 22);
+
+![]( PostgreSQL/media/2.png)
+
+If you try to put in information with the same ID in a table that uses a primary key, it won't let you do it.
+
+![]( PostgreSQL/media/3.png)
+
+**[Constraints]{.underline}**
+
+Constraints are like rules for columns in a table. They help make sure the data is correct and complete. PostgreSQL has different types of constraints such as NOT NULL, UNIQUE, CHECK, and PRIMARY KEY.
+
+Adding a UNIQUE constraint
+
+ALTER TABLE students ADD CONSTRAINT unique\_name UNIQUE (name);
+
+Adding a CHECK constraint
+
+ALTER TABLE students ADD CONSTRAINT check\_age CHECK (age \>= 18);
+
+![](4.png)
+
+**[Adding, Updating, and Deleting Records]{.underline}**
+
+**Adding Records:**
+
+**Inserting a single record**
+
+INSERT INTO students (name, age) VALUES ('Alice Brown', 20);
+
+**Inserting multiple records**
+
+INSERT INTO students (name, age) VALUES ('Bob Johnson', 22), ('Eve White', 19);
+
+![]( PostgreSQL/media/5.png)
+
+**Updating Records:**
+
+UPDATE students SET age = 21 WHERE name = 'Alice Brown';
+
+![]( PostgreSQL/media/6.png)
+
+**Deleting Records:**
+
+DELETE FROM students WHERE name = 'Bob Johnson';
+
+![]( PostgreSQL/media/7.png)
+
+**[Foreign Key]{.underline}**
+
+A foreign key is like a connection between information in two tables. It makes sure that the data in one table corresponds to the data in another table.
+
+Creating a table with a foreign key
+
+CREATE TABLE courses (course\_id SERIAL PRIMARY KEY, course\_name VARCHAR(100), instructor VARCHAR(100));
+
+ALTER TABLE students ADD COLUMN course\_id INT, ADD CONSTRAINT fk\_course FOREIGN KEY (course\_id) REFERENCES courses (course\_id);
+
+![]( PostgreSQL/media/8.png)
+
+**[Adding Relationships Between Tables]{.underline}**
+
+Inserting data with foreign key relationships
+
+INSERT INTO students (name, age, course\_id) VALUES ('fkvf', 33, 8);
+
+![]( PostgreSQL/media/9.png)
+
+**Query to fetch data with a JOIN**
+
+SELECT students.name, courses.course\_name FROM students JOIN courses ON students.course\_id = courses.course\_id;
+
+![]( PostgreSQL/media/10.png)
