@@ -331,14 +331,15 @@ SELECT \* FROM employees;
 ![](PostgreSQL/media/image5.png)
 
 <p>&nbsp;</p>
-**Retrieve specific columns**
+
+**RETRIEVE SPECIFIC COLUMNS**
 
 SELECT name,salary FROM employees;
 
 ![](PostgreSQL/media/image6.png)
 <p>&nbsp;</p>
 
-**INSERT Statement:**
+**INSERT STATEMENT:**
 
 INSERT INTO employees (name,salary) VALUES (\’John Doe\’,60000.00);
 
@@ -389,6 +390,7 @@ INSERT INTO numeric_example VALUES (123,456.78,789.01,1234.5678);
 ![](PostgreSQL/media/image12.png)
 
 <p>&nbsp;</p>
+
 **Character Types:**
 
 Character types include \`CHAR\`,\`VARCHAR\`,and \`TEXT\`
@@ -402,6 +404,7 @@ INSERT INTO character_example VALUES (\’abc\’,\’abcdefg\’,
 ![](PostgreSQL/media/image13.png)
 
 <p>&nbsp;</p>
+
 **Date and Time Types:**
 
 PostgreSQL provides several date and time types,including \`DATE\`,
@@ -432,6 +435,7 @@ road\’,\’Hyderabad\’,\’123456\’));
 ![](PostgreSQL/media/image15.png)
 
 <p>&nbsp;</p>
+
 **Custom Types:**
 
 PostgreSQL allows the creation of custom types using the \`CREATE TYPE\`
@@ -439,11 +443,9 @@ statement.
 
 CREATE TYPE mood AS ENUM (\’happy\’,\’sad\’,\’neutral\’);
 
-CREATE TABLE person_mood (id SERIAL PRIMARY KEY,name VARCHAR(100),
-current_mood moods);
+CREATE TABLE person_mood (id SERIAL PRIMARY KEY,name VARCHAR(100), current_mood moods);
 
-INSERT INTO person_mood (name,current_mood) VALUES (\’Alice\’,
-\’happy\’);
+INSERT INTO person_mood (name,current_mood) VALUES (\’Alice\’, \’happy\’);
 
 ![](PostgreSQL/media/image16.png)
 
@@ -522,6 +524,7 @@ INSERT INTO departments (department_name) VALUES
 ![](PostgreSQL/media/image22.png)
 
 <p>&nbsp;</p>
+
 **INNER JOIN:**
 
 Retrieve data where there is a match in both tables
@@ -532,6 +535,7 @@ JOIN departments ON employees.department_id = departments.department_id;
 ![](PostgreSQL/media/image23.png)
 
 <p>&nbsp;</p>
+
 **LEFT JOIN:**
 
 Retrieve all rows from the left table and the matched rows from the
@@ -543,6 +547,7 @@ JOIN departments ON employees.department_id = departments.department_id;
 ![](PostgreSQL/media/image24.png)
 
 <p>&nbsp;</p>
+
 **RIGHT JOIN:**
 
 Retrieve all rows from the right table and the matched rows from the
@@ -635,6 +640,7 @@ CREATE TABLE students (student\_id SERIAL PRIMARY KEY, name VARCHAR(100), age IN
 ![]( PostgreSQL/media/1.png)
 
 <p>&nbsp;</p>
+
 **Inserting data with a primary key**
 
 INSERT INTO students (name, age) VALUES ('haji', 25), ('saklain', 22);
