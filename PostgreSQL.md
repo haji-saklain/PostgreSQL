@@ -132,7 +132,7 @@ Table of Contents
 
 -   Logging and Monitoring
 
-
+<p>&nbsp;</p>
 
 **Overview of PostgreSQL**
 
