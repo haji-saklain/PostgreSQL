@@ -731,13 +731,13 @@ CREATE TABLE employees (emp_id SERIAL PRIMARY KEY, first_name
 VARCHAR(50), last_name VARCHAR(50),n department VARCHAR(50), salary
 INTEGER);
 
-![](./image1.png)
+![]( PostgreSQL/media/32.png)
 
 Now, let\'s create an index on the \`department\` column:
 
 CREATE INDEX idx_department ON employees (department);
 
-![](./image2.png)
+![]( PostgreSQL/media/33.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -779,7 +779,7 @@ Suppose we have the following query:
 
 SELECT \* FROM employees WHERE department = \'IT\';
 
-![](./image3.png)
+![]( PostgreSQL/media/34.png)
 
 By creating an index on the \`department\` column as shown earlier,
 PostgreSQL can quickly retrieve rows belonging to the \'IT\' department,
@@ -798,7 +798,7 @@ EXPLAIN \[ANALYZE\] \[VERBOSE\] \<query\>;
 
 EXPLAIN SELECT \* FROM employees WHERE department = \'IT\';
 
-![](./image4.png)
+![]( PostgreSQL/media/35.png)
 The output of this EXPLAIN statement will show the query plan, including
 details such as the type of scan used (sequential scan, index scan,
 etc.), the tables involved, and any conditions applied.
@@ -851,14 +851,14 @@ Suppose we have two tables: \`accounts\` and \`transactions\`.
 CREATE TABLE accounts (account_id SERIAL PRIMARY KEY,account_name
 VARCHAR(50), balance DECIMAL);
 
-![](./image5.png)
+![]( PostgreSQL/media/36.png)
 
 CREATE TABLE transactions ( transaction_id SERIAL PRIMARY KEY,
 account_id INT REFERENCES accounts(account_id), amount DECIMAL,
 transaction_type VARCHAR(10), transaction_date TIMESTAMP DEFAULT
 CURRENT_TIMESTAMP);
 
-![](./image6.png)
+![]( PostgreSQL/media/37.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -900,9 +900,9 @@ ROLLBACK TO SAVEPOINT sp1;
 
 COMMIT;
 
-![](./image7.png)
+![]( PostgreSQL/media/38.png)
 
-![](./image8.png)
+![]( PostgreSQL/media/39.png)
 -   We begin a new transaction with \`BEGIN\`.
 
 -   We insert a record into the \`accounts\` table and another record
@@ -971,7 +971,7 @@ DROP ROLE myuser;
 
 This command deletes the \`myuser\` role from the database.
 
-![](./image9.png)
+![]( PostgreSQL/media/40.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -1018,7 +1018,7 @@ REVOKE INSERT ON employees FROM myuser;
 This command revokes the \`INSERT\` privilege on the \`employees\` table
 from the \`myuser\` role.
 
-![](./image10.png)
+![]( PostgreSQL/media/41.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
