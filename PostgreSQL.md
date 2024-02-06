@@ -95,29 +95,8 @@ Table of Contents
 
 -   Logical Replication
 
-16. High Availability
 
--   Connection Pooling
-
--   Failover Strategies
-
-17. Advanced Features
-
--   Triggers and Rules
-
--   Stored Procedures and Functions
-
--   Views
-
--   Full-Text Search
-
-18. Extensions
-
--   Overview of Extensions
-
--   Installing and Managing Extensions
-
-19. Tools and Utilities
+16. Tools and Utilities
 
 -   pgAdmin (Graphical Administration Tool)
 
@@ -125,13 +104,7 @@ Table of Contents
 
 -   Other Third-Party Tools
 
-20. Troubleshooting
 
--   Common Issues and Solutions
-
--   Error Codes and Messages
-
--   Logging and Monitoring
 
 <p>&nbsp;</p>
 
@@ -740,4 +713,665 @@ SELECT students.name, courses.course\_name FROM students JOIN courses ON student
 
 ![]( PostgreSQL/media/10.png)
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Creating Indexes:**
+
+Indexes in PostgreSQL are like organized lists that help the database
+find specific information faster. They work by sorting and storing data
+based on certain columns, making it quicker for the database to locate
+and retrieve the desired rows when you run a query. So, they basically
+speed up the process of fetching data from the database.
+
+CREATE INDEX index_name ON table_name (column_name);
+
+Let\'s consider a example with a table named \`employees\`:
+
+CREATE TABLE employees (emp_id SERIAL PRIMARY KEY, first_name
+VARCHAR(50), last_name VARCHAR(50),n department VARCHAR(50), salary
+INTEGER);
+
+![](./image1.png)
+
+Now, let\'s create an index on the \`department\` column:
+
+CREATE INDEX idx_department ON employees (department);
+
+![](./image2.png)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Query Optimization Techniques:**
+
+PostgreSQL offers various techniques to optimize queries for better
+performance:
+
+1\. Proper Indexing: Create indexes on columns frequently used in WHERE
+clauses, JOIN conditions, or ORDER BY clauses.
+<p>&nbsp;</p>
+
+2\. Using EXPLAIN: Analyze the execution plan of a query using the
+EXPLAIN statement to identify potential bottlenecks and optimize the
+query accordingly.
+<p>&nbsp;</p>
+
+3\. Query Rewriting: Rewrite complex queries to simplify them and
+improve their performance.
+<p>&nbsp;</p>
+
+4\. Join Strategies: Choose appropriate join strategies (e.g., nested
+loop, hash join, merge join) based on the size and characteristics of
+the tables involved.
+<p>&nbsp;</p>
+
+5\. Avoiding Unnecessary Functions: Avoid using functions in WHERE
+clauses that prevent the use of indexes.
+<p>&nbsp;</p>
+
+6\. Partitioning: Partition large tables to improve query performance by
+splitting them into smaller, more manageable partitions.
+<p>&nbsp;</p>
+
+Let\'s take an example of a simple query optimization technique using
+indexing:
+
+Suppose we have the following query:
+
+SELECT \* FROM employees WHERE department = \'IT\';
+
+![](./image3.png)
+
+By creating an index on the \`department\` column as shown earlier,
+PostgreSQL can quickly retrieve rows belonging to the \'IT\' department,
+resulting in faster query execution.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**EXPLAIN Statement:**
+
+The EXPLAIN statement is used to analyze the execution plan of a query
+without actually executing it. It provides valuable insights into how
+PostgreSQL processes the query and which indexes it uses. Here\'s the
+syntax:
+
+EXPLAIN \[ANALYZE\] \[VERBOSE\] \<query\>;
+
+EXPLAIN SELECT \* FROM employees WHERE department = \'IT\';
+
+![](./image4.png)
+The output of this EXPLAIN statement will show the query plan, including
+details such as the type of scan used (sequential scan, index scan,
+etc.), the tables involved, and any conditions applied.
+
+By analyzing this output, you can determine whether the query is
+utilizing indexes efficiently and identify any areas for optimization.
+
+These techniques can significantly improve the performance of your
+PostgreSQL queries, especially when dealing with large datasets and
+complex queries.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**ACID Properties**
+
+ACID stands for Atomicity, Consistency, Isolation, and Durability. These
+properties ensure that database transactions are processed reliably.
+
+1\. Atomicity: Atomicity ensures that either all operations within a
+transaction are successfully completed, or none of them are. If any part
+of the transaction fails, the entire transaction is rolled back.
+
+2\. Consistency: Consistency ensures that the database remains in a
+consistent state before and after the transaction. Transactions must
+maintain all database constraints, including foreign keys, uniqueness,
+etc.
+
+3\. Isolation: Isolation ensures that the execution of transactions
+concurrently doesn\'t interfere with each other. Each transaction should
+appear to execute in isolation from other transactions, even though they
+may be running concurrently.
+
+4\. Durability: Durability guarantees that once a transaction is
+committed, its changes are permanent and will survive system failures.
+
+**BEGIN, COMMIT, ROLLBACK Statements**
+
+These statements are used to control transactions in PostgreSQL.
+
+1\. BEGIN: Starts a new transaction block.
+
+2\. COMMIT: Saves all the changes made within the transaction to the
+database.
+
+3\. ROLLBACK: Aborts the current transaction, discarding any changes
+made within it.
+
+Suppose we have two tables: \`accounts\` and \`transactions\`.
+
+CREATE TABLE accounts (account_id SERIAL PRIMARY KEY,account_name
+VARCHAR(50), balance DECIMAL);
+
+![](./image5.png)
+
+CREATE TABLE transactions ( transaction_id SERIAL PRIMARY KEY,
+account_id INT REFERENCES accounts(account_id), amount DECIMAL,
+transaction_type VARCHAR(10), transaction_date TIMESTAMP DEFAULT
+CURRENT_TIMESTAMP);
+
+![](./image6.png)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Savepoints**
+
+Savepoints allow you to set points within a transaction to which you can
+later roll back.
+
+Syntax for creating a savepoint: SAVEPOINT savepoint_name;
+
+-   Begin a new transaction
+
+BEGIN;
+
+-   Insert a new record into the accounts table
+
+INSERT INTO accounts (account_name, balance) VALUES ('Haji Saklain',
+1000);
+
+-   Insert a new record into the transactions table
+
+INSERT INTO transactions (account_id, amount, transaction_type) VALUES
+(1, 500, \'deposit\');
+
+-   Savepoint 1
+
+SAVEPOINT sp1;
+
+-   Insert another record into the transactions table
+
+INSERT INTO transactions (account_id, amount, transaction_type) VALUES
+(1, 300, \'withdrawal\');
+
+-   Rollback to Savepoint 1
+
+ROLLBACK TO SAVEPOINT sp1;
+
+-   Commit the transaction
+
+COMMIT;
+
+![](./image7.png)
+
+![](./image8.png)
+-   We begin a new transaction with \`BEGIN\`.
+
+-   We insert a record into the \`accounts\` table and another record
+    into the \`transactions\` table.
+
+-   We set a savepoint \`sp1\` and then insert another record into the
+    \`transactions\` table.
+
+-   We rollback to \`sp1\`, undoing the last transaction.
+
+-   Finally, we commit the transaction, saving the changes to the
+    database.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Authentication Methods**
+
+PostgreSQL supports various authentication methods to control access to
+the database server.
+
+These methods are defined in the \`pg_hba.conf\` file.
+
+Some common authentication methods are:
+
+-   trust: Allows the connection unconditionally.
+
+-   password: Requires the client to provide a password for
+    authentication.
+
+-   md5: Requires the client to provide a password and uses MD5 hashing
+    for secure transmission.
+
+-   scram-sha-256: Secure Password Authentication mechanism based on the
+    SCRAM protocol.
+
+-   cert: Uses SSL client certificates for authentication.
+
+You can configure these authentication methods at the host, database,
+user, or IP level in the \`pg_hba.conf\` file.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**User and Role Management**
+
+In PostgreSQL, roles are used to control access privileges and manage
+user permissions. Users are simply roles with the ability to log in. You
+can create, modify, and delete roles using SQL commands or the \`CREATE
+ROLE\`, \`ALTER ROLE\`, and \`DROP ROLE\` statements.
+
+Example of creating a new role:
+
+CREATE ROLE myuser WITH LOGIN PASSWORD \'mypassword\';
+
+This command creates a new role named \`myuser\` with the ability to log
+in and sets the password to \`mypassword\`.
+
+Example of modifying a role:
+
+ALTER ROLE myuser WITH SUPERUSER;
+
+This command grants superuser privileges to the \`myuser\` role.
+
+Example of deleting a role:
+
+DROP ROLE myuser;
+
+This command deletes the \`myuser\` role from the database.
+
+![](./image9.png)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Permissions and Privileges**
+
+PostgreSQL uses a comprehensive system of permissions and privileges to
+control access to database objects such as tables, views, and functions.
+The main privileges include:
+
+-   SELECT: Allows reading data from a table or view.
+
+-   INSERT: Allows inserting data into a table.
+
+-   UPDATE: Allows updating existing data in a table.
+
+-   DELETE: Allows deleting data from a table.
+
+-   USAGE: Allows using a schema, sequence, or function.
+
+-   CREATE: Allows creating new objects within a schema.
+
+-   ALTER: Allows altering existing objects.
+
+-   DROP: Allows dropping objects.
+
+-   GRANT: Allows granting privileges to other roles.
+
+-   REVOKE: Allows revoking privileges from other roles.
+
+You can grant and revoke privileges using the \`GRANT\` and \`REVOKE\`
+statements.
+
+Example of granting SELECT privilege on a table:
+
+GRANT SELECT ON employees TO myuser;
+
+This command grants the \`SELECT\` privilege on the \`employees\` table
+to the \`myuser\` role.
+
+Example of revoking INSERT privilege on a table:
+
+REVOKE INSERT ON employees FROM myuser;
+
+This command revokes the \`INSERT\` privilege on the \`employees\` table
+from the \`myuser\` role.
+
+![](./image10.png)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**pg_dump and pg_restore**
+
+pg_dump
+
+pg_dump is a utility provided by PostgreSQL for backing up entire
+databases or specific database objects.
+
+It generates a SQL script that contains the SQL commands required to
+recreate the database\'s schema and data.
+
+Syntax: pg_dump -U username -d dbname \> backup.sql
+
+pg_dump -U postgres -d mydatabase \> mydatabase_backup.sql
+
+pg_restore:
+
+\`pg_restore\` is used to restore databases from backups created by
+\`pg_dump\`.
+
+It executes the SQL commands contained in the backup file to recreate
+the database\'s schema and populate it with data.
+
+Syntax: pg_restore -U username -d dbname backup.sql
+
+pg_restore -U postgres -d mydatabase mydatabase_backup.sql
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Continuous Archiving and Point-in-Time Recovery:**
+<p>&nbsp;</p>
+
+**Continuous Archiving (WAL Archiving):**
+
+PostgreSQL\'s continuous archiving feature allows you to continuously
+archive the Write-Ahead Log (WAL) files to external storage.
+
+This enables point-in-time recovery and provides additional protection
+against data loss.
+
+**Configuration in \`postgresql.conf\`:**
+
+archive_mode = on
+
+archive_command = \'cp %p /path/to/archive/%f\'
+
+archive_mode = on
+
+archive_command = \'cp %p /var/lib/postgresql/12/main/archive/%f\'
+
+Here, \`%p\` represents the path of the WAL file, and \`%f\` represents
+the filename of the WAL file.
+
+Point-in-Time Recovery (PITR):
+
+Point-in-time recovery allows you to restore a PostgreSQL database to a
+specific point in time by applying the archived WAL segments.
+
+Steps:
+
+1\. Restore a base backup using \`pg_restore\`.
+
+2\. Apply WAL segments using the \`restore_command\` in
+\`recovery.conf\`.
+
+Example
+
+-   \`recovery.conf\`
+
+restore_command = \'cp /path/to/archive/%f %p\'
+
+recovery_target_time = \'YYYY-MM-DD HH:MI:SS\'
+
+-   'restore_command'
+
+restore_command = \'cp /var/lib/postgresql/12/main/archive/%f %p\'
+
+recovery_target_time = \'2024-02-06 12:00:00\'
+
+\`\`\`
+
+\- After setting up \`recovery.conf\`, start PostgreSQL with \`pg_ctl
+start\`.
+<p>&nbsp;</p>
+
+**Streaming Replication**
+
+Streaming replication is a built-in replication feature in PostgreSQL
+that provides high availability and read scalability by replicating
+changes from a primary (master) database to one or more standby servers.
+It operates at the physical level, replicating the entire data files
+(blocks) from the primary to the standby servers.
+<p>&nbsp;</p>
+
+**How Streaming Replication Works**
+
+1\. Primary Server :
+
+The primary server continuously writes changes to its write-ahead log
+(WAL) files, which contain a record of all modifications to the
+database.
+
+A background process called the WAL sender sends WAL segments to each
+standby server.
+
+2\. Standby Servers:
+
+Standby servers receive the WAL segments from the primary server and
+apply them to their own data files.
+
+Standby servers operate in hot standby mode, allowing read-only queries
+to be executed against them.
+
+**Setting up Streaming Replication**
+
+1\. Configure Primary Server:
+
+Enable WAL archiving in \`postgresql.conf\`:
+
+wal_level = replica
+
+archive_mode = on
+
+archive_command = \'cp %p /path/to/archive/%f\'
+
+-Set up \`pg_hba.conf\` to allow replication connections.
+
+2\. Create Standby Server:
+
+Take a base backup of the primary server:
+
+pg_basebackup -h primary_host -D /path/to/data_directory -U
+replication_role -P -X stream
+
+Create a recovery configuration file (\`recovery.conf\`) in the
+standby\'s data directory:
+
+standby_mode = \'on\'
+
+primary_conninfo = \'host=primary_host port=5432 user=replication_role\'
+
+restore_command = \'cp /path/to/archive/%f %p\'
+
+Start the standby server with \`pg_ctl start\`.
+
+Example: we have a primary server with a table \`employees\`:
+
+CREATE TABLE employees (id SERIAL PRIMARY KEY, name VARCHAR(100),
+department VARCHAR(100));
+
+We configure streaming replication between the primary server (host:
+\`primary_host\`) and a standby server (host: \`standby_host\`). Any
+changes made to the \`employees\` table on the primary server will be
+replicated to the standby server.
+
+**Logical Replication:**
+
+Logical replication is another method of replication in PostgreSQL that
+operates at a higher level of abstraction compared to streaming
+replication. Instead of replicating physical changes to data files,
+logical replication replicates changes at the logical level (e.g.,
+individual rows, tables, or databases).
+
+**How Logical Replication Works:**
+
+1\. Publication and Subscription:
+
+The primary server publishes changes to specific tables or databases
+using publications.
+
+Standby servers subscribe to these publications to receive and apply the
+changes.
+
+2\. Replication Slots:
+
+\- Replication slots are used to keep track of the replication progress
+on standby servers and ensure that changes are not discarded before
+being applied.
+
+3\. Decoding and Applying Changes:
+
+Changes made to the published tables are captured and decoded into a
+logical replication stream.
+
+Standby servers apply these changes to their own tables.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Setting up Logical Replication:**
+
+1.  Configure Primary Server:
+
+Enable \`wal_level\` and \`max_replication_slots\` in
+\`postgresql.conf\`.
+
+2.  Create Publication:
+
+Create a publication for the tables to be replicated:
+
+CREATE PUBLICATION pub_name FOR TABLE table_name;
+
+3.  Create Standby Server:
+
+Create a replication slot on the standby server:
+
+SELECT \* FROM pg_create_logical_replication_slot(\'slot_name\',
+\'pgoutput\');
+
+4.  Subscribe to the publication
+
+CREATE SUBSCRIPTION sub_name CONNECTION \'host=primary_host
+dbname=primary_db\' PUBLICATION pub_name;
+<p>&nbsp;</p>
+
+Example:
+
+Let\'s continue with the previous example of the \`employees\` table. We
+configure logical replication to replicate changes made to the
+\`employees\` table from the primary server (host: \`primary_host\`) to
+the standby server (host: \`standby_host\`).
+
+Create a publication for the employees table
+
+CREATE PUBLICATION pub_employees FOR TABLE employees;
+
+Create a replication slot on the standby server
+
+SELECT \* FROM pg_create_logical_replication_slot(\'slot_employees\',
+\'pgoutput\');
+
+Subscribe to the publication on the standby server
+
+CREATE SUBSCRIPTION sub_employees CONNECTION \'host=primary_host
+dbname=primary_db\' PUBLICATION pub_employees;
+
+Now, any changes made to the \`employees\` table on the primary server
+will be replicated to the standby server using logical replication.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Tools and Utilities**
+<p>&nbsp;</p>
+
+**pgAdmin** (Graphical Administration Tool):
+
+pgAdmin is a popular open-source graphical administration tool for
+PostgreSQL. It provides a user-friendly interface for managing
+databases, executing queries, and performing various administrative
+tasks. Here\'s an overview of some key features:
+
+Database Connection: pgAdmin allows you to connect to PostgreSQL
+databases by providing connection parameters such as host, port,
+username, and password.
+
+Database Object Management: You can browse and manage database objects
+such as tables, views, indexes, functions, triggers, and schemas.
+
+Query Tool: pgAdmin includes a query tool that allows you to execute SQL
+queries and view query results. You can also save and load query files.
+
+Data Import/Export: pgAdmin provides tools for importing and exporting
+data to and from PostgreSQL databases in various formats such as CSV,
+SQL, and Excel.
+
+Server Monitoring: You can monitor server activity, view server logs,
+and analyze server performance using pgAdmin\'s monitoring features.
+
+Here\'s a basic example of how to connect to a PostgreSQL database using
+pgAdmin and execute a simple query:
+
+1\. Launch pgAdmin and connect to your PostgreSQL server.
+
+2\. Navigate to the \"Query Tool\" tab.
+
+3\. Write a SQL query,
+
+for example:
+
+4\. Click the \"Execute\" button to run the query and view the results.
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**psql** (Command-Line Interface):
+
+psql is the command-line interface for PostgreSQL. It allows you to
+interactively execute SQL queries, manage databases, and perform
+administrative tasks directly from the terminal.
+
+Here are some key features of psql:
+
+Interactive Shell: psql provides an interactive shell where you can
+execute SQL commands, view query results, and manage PostgreSQL
+databases.
+
+Command-Line Options: psql supports various command-line options for
+specifying connection parameters, formatting query results, and
+controlling behavior.
+
+Meta-Commands: psql supports meta-commands, which are commands that are
+processed by psql itself rather than being sent to the PostgreSQL
+server. Meta-commands are preceded by a backslash (\\).
+
+Output Formatting: psql allows you to control the formatting of query
+results using options such as \`\\x\` for expanded display mode and
+\`\\t\` for toggling the output format between aligned and unaligned.
+
+Here\'s an example of how to connect to a PostgreSQL database using psql
+and execute a simple query:
+
+1\. Open a terminal window.
+
+2\. Run the following command to connect to your PostgreSQL database:
+
+psql -h localhost -U username -d dbname
+
+Replace \`localhost\` with the hostname or IP address of your PostgreSQL
+server, \`username\` with your PostgreSQL username, and \`dbname\` with
+the name of your database.
+
+3\. Enter your password when prompted.
+
+4\. Once connected, you can execute SQL queries directly in the psql
+shell,
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+**Other Third-Party Tools:**
+
+In addition to pgAdmin and psql, there are numerous third-party tools
+available for PostgreSQL administration, monitoring, performance tuning,
+and development. Here are some examples:
+
+pgBadger: pgBadger is a PostgreSQL log analyzer that generates detailed
+reports from PostgreSQL log files, helping you identify performance
+bottlenecks and optimize your database configuration.
+
+pgDash: pgDash is a comprehensive monitoring solution for PostgreSQL
+that provides real-time insights into database performance, query
+execution, and server health.
+
+pg_repack: pg_repack is a PostgreSQL extension that allows you to
+reorganize tables and indexes without blocking write operations, helping
+you reclaim disk space and improve query performance.
+
+These third-party tools offer additional functionality and customization
+options beyond what is provided by pgAdmin and psql, making them
+valuable additions to your PostgreSQL toolbox.
+
+Overall, PostgreSQL offers a rich ecosystem of tools and utilities for
+managing and optimizing databases, allowing you to choose the ones that
+best fit your workflow and requirements.
 
