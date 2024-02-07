@@ -57,7 +57,7 @@ Table of Contents
 
 9. Adding, Updating, and Deleting Records
 
-10. Relationships
+10. Types of Relationships
 
 11.  Indexes and Optimization
 
@@ -700,11 +700,156 @@ ALTER TABLE students ADD COLUMN course\_id INT, ADD CONSTRAINT fk\_course FOREIG
 
 **Adding Relationships Between Tables**
 
-Inserting data with foreign key relationships
+**One-to-One (1:1) Relationship:**
 
-INSERT INTO students (name, age, course\_id) VALUES ('fkvf', 33, 8);
+In a one-to-one relationship, each record in one table is related to
+exactly one record in another table, and vice versa.
 
-![]( PostgreSQL/media/9.png)
+Consider two tables: \`employees\` and \`employee_details\`.
+
+CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name
+VARCHAR(100), department VARCHAR(100));
+
+CREATE TABLE employee_details (employee_id INTEGER PRIMARY KEY, address
+VARCHAR(100), phone_number VARCHAR(20), FOREIGN KEY (employee_id)
+REFERENCES employees (employee_id));
+
+-   Insert data into employees table
+
+INSERT INTO employees (name, department) VALUES (\'John Doe\', \'HR\');
+
+-   Insert data into employee_details table
+
+INSERT INTO employee_details (employee_id, address, phone_number) VALUES
+(1, \'123 Road\', \'123-456-7890\');
+
+-   Retrieve employee details with JOIN
+
+SELECT employees.\*, employee_details.address,
+employee_details.phone_number FROM employees JOIN employee_details ON
+employees.employee_id = employee_details.employee_id;
+
+![]( PostgreSQL/media/38.png)
+
+**One-to-Many (1:N) Relationship:**
+
+In a one-to-many relationship, each record in one table can be related
+to multiple records in another table, but each record in the second
+table is related to only one record in the first table.
+
+Consider two tables: \`departments\` and \`employees\`.
+
+CREATE TABLE departments (department_id SERIAL PRIMARY KEY, name
+VARCHAR(100));
+
+CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name
+VARCHAR(100), department_id INTEGER, FOREIGN KEY (department_id)
+REFERENCES departments (department_id));
+
+-   Insert data into departments table
+
+INSERT INTO departments (name) VALUES (\'HR\');
+
+-   Insert data into employees table
+
+INSERT INTO employees (name, department_id) VALUES (\'Haji\', 1);
+
+INSERT INTO employees (name, department_id) VALUES (\'Saklain\', 1);
+
+-   Retrieve employees in a department
+
+SELECT \* FROM employees WHERE department_id = 1;
+
+![]( PostgreSQL/media/39.png)
+
+
+**Many-to-One (N:1) Relationship:**
+
+In a many-to-one relationship, each record in the \"many\" table can be
+related to only one record in the \"one\" table, but each record in the
+\"one\" table can be related to multiple records in the \"many\" table.
+
+Consider two tables: \`employees\` and \`departments\`.
+
+CREATE TABLE employees ( employee_id SERIAL PRIMARY KEY, name
+VARCHAR(100), department_id INTEGER);
+
+CREATE TABLE departments ( department_id SERIAL PRIMARY KEY, name
+VARCHAR(100));
+
+-   Insert data into departments table
+
+INSERT INTO departments (name) VALUES (\'HR\');
+
+![]( PostgreSQL/media/40.png)
+
+
+-   Insert data into employees table
+
+INSERT INTO employees (name, department_id) VALUES (\'Haji, 1);
+
+INSERT INTO employees (name, department_id) VALUES (\'Saklain\', 1);
+
+-   Retrieve department of an employee
+
+SELECT employees.\*, departments.name AS department_name FROM employees
+JOIN departments ON employees.department_id = departments.department_id;
+
+![]( PostgreSQL/media/41.png)
+
+
+**Many-to-Many (N:M) Relationship:**
+
+In a many-to-many relationship, each record in one table can be related
+to multiple records in another table, and vice versa. This type of
+relationship requires a junction table.
+
+Consider three tables: \`students\`, \`courses\`, and
+\`student_courses\`
+
+CREATE TABLE students (student_id SERIAL PRIMARY KEY, name
+VARCHAR(100));
+
+CREATE TABLE courses (course_id SERIAL PRIMARY KEY, name VARCHAR(100));
+
+CREATE TABLE student_courses (student_id INTEGER, course_id INTEGER,
+PRIMARY KEY (student_id, course_id), FOREIGN KEY (student_id) REFERENCES
+students (student_id), FOREIGN KEY (course_id) REFERENCES courses
+(course_id));
+
+-   Insert data into students table
+
+INSERT INTO students (name) VALUES (\'Haji\');
+
+INSERT INTO students (name) VALUES (\'Saklain\');
+
+-   Insert data into courses table
+
+INSERT INTO courses (name) VALUES (\'Math\');
+
+INSERT INTO courses (name) VALUES (\'Science\');
+
+![]( PostgreSQL/media/42.png)
+
+
+-   Enroll students in courses
+
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 1); \--
+Haji enrolls in Math
+
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 2); \--
+Haji enrolls in Science
+
+INSERT INTO student_courses (student_id, course_id) VALUES (2, 2); \--
+Saklain enrolls in Science
+
+-   Retrieve courses enrolled by a student
+
+SELECT courses.\* FROM courses JOIN student_courses ON courses.course_id
+= student_courses.course_id WHERE student_courses.student_id = 1;
+
+![]( PostgreSQL/media/43.png)
+
 <p>&nbsp;</p>
 
 **Query to fetch data with a JOIN**
