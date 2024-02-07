@@ -730,6 +730,8 @@ employee_details.phone_number FROM employees JOIN employee_details ON
 employees.employee_id = employee_details.employee_id;
 
 ![]( PostgreSQL/media/38.png)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 **One-to-Many (1:N) Relationship:**
 
@@ -745,6 +747,7 @@ VARCHAR(100));
 CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name
 VARCHAR(100), department_id INTEGER, FOREIGN KEY (department_id)
 REFERENCES departments (department_id));
+<p>&nbsp;</p>
 
 -   Insert data into departments table
 
@@ -761,6 +764,8 @@ INSERT INTO employees (name, department_id) VALUES (\'Saklain\', 1);
 SELECT \* FROM employees WHERE department_id = 1;
 
 ![]( PostgreSQL/media/39.png)
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 
 **Many-to-One (N:1) Relationship:**
@@ -776,6 +781,7 @@ VARCHAR(100), department_id INTEGER);
 
 CREATE TABLE departments ( department_id SERIAL PRIMARY KEY, name
 VARCHAR(100));
+<p>&nbsp;</p>
 
 -   Insert data into departments table
 
@@ -783,6 +789,7 @@ INSERT INTO departments (name) VALUES (\'HR\');
 
 ![]( PostgreSQL/media/40.png)
 
+<p>&nbsp;</p>
 
 -   Insert data into employees table
 
@@ -797,6 +804,8 @@ JOIN departments ON employees.department_id = departments.department_id;
 
 ![]( PostgreSQL/media/41.png)
 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 **Many-to-Many (N:M) Relationship:**
 
@@ -816,12 +825,14 @@ CREATE TABLE student_courses (student_id INTEGER, course_id INTEGER,
 PRIMARY KEY (student_id, course_id), FOREIGN KEY (student_id) REFERENCES
 students (student_id), FOREIGN KEY (course_id) REFERENCES courses
 (course_id));
+<p>&nbsp;</p>
 
 -   Insert data into students table
 
 INSERT INTO students (name) VALUES (\'Haji\');
 
 INSERT INTO students (name) VALUES (\'Saklain\');
+<p>&nbsp;</p>
 
 -   Insert data into courses table
 
@@ -830,6 +841,7 @@ INSERT INTO courses (name) VALUES (\'Math\');
 INSERT INTO courses (name) VALUES (\'Science\');
 
 ![]( PostgreSQL/media/42.png)
+<p>&nbsp;</p>
 
 
 -   Enroll students in courses
@@ -842,6 +854,7 @@ Haji enrolls in Science
 
 INSERT INTO student_courses (student_id, course_id) VALUES (2, 2); \--
 Saklain enrolls in Science
+<p>&nbsp;</p>
 
 -   Retrieve courses enrolled by a student
 
@@ -1045,9 +1058,9 @@ ROLLBACK TO SAVEPOINT sp1;
 
 COMMIT;
 
-![]( PostgreSQL/media/38.png)
+![]( PostgreSQL/media/img38.png)
 
-![]( PostgreSQL/media/39.png)
+![]( PostgreSQL/media/img39.png)
 -   We begin a new transaction with \`BEGIN\`.
 
 -   We insert a record into the \`accounts\` table and another record
@@ -1116,7 +1129,7 @@ DROP ROLE myuser;
 
 This command deletes the \`myuser\` role from the database.
 
-![]( PostgreSQL/media/40.png)
+![]( PostgreSQL/media/img40.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -1163,7 +1176,7 @@ REVOKE INSERT ON employees FROM myuser;
 This command revokes the \`INSERT\` privilege on the \`employees\` table
 from the \`myuser\` role.
 
-![]( PostgreSQL/media/41.png)
+![]( PostgreSQL/media/img41.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
