@@ -1456,6 +1456,9 @@ pgAdmin and execute a simple query:
 3\. Write a SQL query,
 
 for example:
+![]( PostgreSQL/media/imgs1.png)
+
+
 
 4\. Click the \"Execute\" button to run the query and view the results.
 <p>&nbsp;</p>
@@ -1502,6 +1505,8 @@ the name of your database.
 
 4\. Once connected, you can execute SQL queries directly in the psql
 shell,
+![]( PostgreSQL/media/imgs2.png)
+
 
 
 <p>&nbsp;</p>
