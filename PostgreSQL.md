@@ -1460,6 +1460,7 @@ for example: select * from movies;
 
 4\. Click the \"Execute\" button to run the query and view the results.
 <p>&nbsp;</p>
+
 ![]( PostgreSQL/media/imgs1.png)
 <p>&nbsp;</p>
 <p>&nbsp;</p>
